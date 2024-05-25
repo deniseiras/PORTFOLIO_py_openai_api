@@ -1,6 +1,25 @@
 # PORTFOLIO_py_openai_api
 
-Exploring OpenAI API
+An OpenAI API interface that implements the methods:
+
+**set_openai_key()**
+
+Set openai key using environment variable OPENAI_KEY inside .env file
+
+**get_completion(prompt, model, temperature)**
+
+Get models response using OpenAI API
+
+Parameters:
+- prompt: prompt to send to OpenAI
+- model: OpenAI model to use
+- temperature: degree of randomness/creativity of the model's output (0= no randomness, 1=super-random)
+
+Returns
+- message: is the response message or the exception code
+- finish_reason: is the reason why the message was returned
+
+
 
 ## Installing
 

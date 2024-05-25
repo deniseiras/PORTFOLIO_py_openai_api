@@ -4,7 +4,7 @@ Open AI API
 :author: Denis Eiras
 
 Functions:
-    - get_completion: get completion using OpenAI
+    - get_completion: get models response using OpenAI API
     - set_openai_key: set openai key using environment variable OPENAI_KEY inside .env file
 """
 
@@ -14,6 +14,9 @@ import os
 
 
 def set_openai_key():
+    """
+        set openai key using environment variable OPENAI_KEY inside.env file
+    """
     if openai.api_key is None:
         print('setting openai key')
         del os.environ['OPENAI_API_KEY']
