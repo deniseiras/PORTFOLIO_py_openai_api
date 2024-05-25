@@ -11,8 +11,14 @@ pip install --upgrade pip
 pip install -r requirements.txt 
 ~~~
 
-## Runnnig
+## Running
 
+Create a file named '.env' setting the you OPENAI_API_KEY license. i.e.:
+
+~~~bash
+OPENAI_API_KEY=sk-........................
+~~~
+Then:
 ~~~
 export PYTHONPATH=./:$PYTHONPATH
 python tests/test_openai_api.py
