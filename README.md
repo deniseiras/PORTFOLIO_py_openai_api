@@ -1,6 +1,6 @@
 # PORTFOLIO_py_openai_api
 
-Exploring Open API
+Exploring OpenAI API
 
 ## Installing
 
