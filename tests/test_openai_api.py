@@ -1,8 +1,14 @@
 import unittest
-from src.openai_api import get_completion, get_openai_invalid_req_error
+from src.openai_api import get_completion, get_openai_invalid_req_error, set_openai_key
 
 class TestGetCompletion(unittest.TestCase):
 
+    # setup function for tests
+    
+    def setUp(self) -> None:
+        set_openai_key()
+    
+    
     def test_get_completion_with_default_model(self):
         prompt = "What is the capital of France?"
         response, finish_reason = get_completion(prompt)
