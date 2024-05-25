@@ -14,5 +14,6 @@ pip install -r requirements.txt
 ## Runnnig
 
 ~~~
-export 
+export PYTHONPATH=./:$PYTHONPATH
+python tests/test_openai_api.py
 ~~~
