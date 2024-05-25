@@ -1,5 +1,5 @@
 import unittest
-from src.openai_api import get_completion, get_openai_invalid_req_error, set_openai_key
+from src.openai_api import get_completion, set_openai_key
 
 class TestGetCompletion(unittest.TestCase):
 
@@ -29,8 +29,10 @@ class TestGetCompletion(unittest.TestCase):
 
     def test_get_completion_with_invalid_model(self):
         prompt = "What is the speed of light?"
-        with self.assertRaises(get_openai_invalid_req_error()):
-            get_completion(prompt, model="invalid-model")
+        response, err = get_completion(prompt, model="invalid-model")
+        self.assertEqual(response, 'model_not_found')
+        self.assertEqual(err, 'openai_exception')
+
 
 if __name__ == '__main__':
     unittest.main()
