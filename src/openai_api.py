@@ -25,7 +25,7 @@ def set_openai_key():
         openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-def get_completion(prompt, model="gpt-3.5-turbo", temperature=0):
+def get_completion(prompt_user, prompt_system=None, model="gpt-3.5-turbo", temperature=0):
     """
         get completion using OpenAI
 
@@ -45,18 +45,21 @@ def get_completion(prompt, model="gpt-3.5-turbo", temperature=0):
         - 'openai_exception' will be raised when there is an OpenAI exception
 
         Whether your API call works at all, as total tokens must be below the model’s maximum limit:
-        - 4097 tokens for gpt-3.5-turbo
+        - 16k tokens for gpt-3.5-turbo (gpt-3.5-turbo-0125. in 27/06/2024)
         - 128k tokens for gpt-4
     """
         
     set_openai_key()
     
+    mssgs = [{"role": "user", "content": prompt_user}]
+    if prompt_system:
+        mssgs.append({"role": "system", "content": prompt_system})
     try:
         client = openai.OpenAI()
         response = client.chat.completions.create(
             model=model,
             # TODO # response_format={"type": "json_object"},
-            messages=[{"role": "user", "content": prompt}],
+            messages=mssgs,
             temperature=temperature,
         )
         choice = response.choices[0]
@@ -66,7 +69,8 @@ def get_completion(prompt, model="gpt-3.5-turbo", temperature=0):
         ret_message = e.code
         ret_fin_reason = 'openai_exception'
         
-    print(f'\nPrompt: {prompt}')
+    print(f'\n\nPrompt System: {prompt_system}')
+    print(f'\nPrompt User: {prompt_user}')
     print(f'Response: {ret_message}')
     print(f'Finish reason: {ret_fin_reason}')
     return ret_message, ret_fin_reason
