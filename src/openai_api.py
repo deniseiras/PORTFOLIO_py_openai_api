@@ -11,6 +11,7 @@ Functions:
 import openai
 import dotenv
 import os
+import tiktoken
 
 
 def set_openai_key():
@@ -45,8 +46,9 @@ def get_completion(prompt_user, prompt_system=None, model="gpt-3.5-turbo", tempe
         - 'openai_exception' will be raised when there is an OpenAI exception
 
         Whether your API call works at all, as total tokens must be below the model’s maximum limit:
-        - 16k tokens for gpt-3.5-turbo (gpt-3.5-turbo-0125. in 27/06/2024)
-        - 128k tokens for gpt-4
+        - 4096 tokens for   gpt-3.5-turbo-instruct
+        - 16k tokens for    gpt-3.5-turbo (points to gpt-3.5-turbo-0125. in 27/06/2024)
+        - 128k tokens for   gpt-4
     """
         
     set_openai_key()
@@ -56,22 +58,37 @@ def get_completion(prompt_user, prompt_system=None, model="gpt-3.5-turbo", tempe
         mssgs.append({"role": "system", "content": prompt_system})
     try:
         client = openai.OpenAI()
+        
         response = client.chat.completions.create(
             model=model,
-            # TODO # response_format={"type": "json_object"},
+            # response_format={"type": "json_object"},
             messages=mssgs,
             temperature=temperature,
         )
+        
         choice = response.choices[0]
         ret_message = choice.message.content
         ret_fin_reason = choice.finish_reason
+        
     except Exception as e:
         ret_message = e.code
         ret_fin_reason = 'openai_exception'
-        
-    print(f'\n\nPrompt System: {prompt_system}')
-    print(f'\nPrompt User: {prompt_user}')
-    print(f'Response: {ret_message}')
-    print(f'Finish reason: {ret_fin_reason}')
+
+    # TODO extract the model name for this. gpt-3.5-turbo does not work here
+    tokenizer = tiktoken.get_encoding('cl100k_base')
+    if prompt_system:
+        tokens_sys = tokenizer.encode(prompt_system)
+    else:
+        tokens_sys = []
+    tokens_user = tokenizer.encode(prompt_user)
+    tokens_response = tokenizer.encode(ret_message)
+    
+    print(f'\n\nPrompt System: {len(tokens_sys)} tokens.\n ===> {prompt_system}')
+    print(f'Prompt User:  {len(tokens_user)} tokens.\n ===> {prompt_user}')
+    print(f'Tokens Response: {len(tokens_response)} tokens.\n')
+    print(f'Total tokens = {len(tokens_sys)+len(tokens_user)}')
+    print(f'\n==============\nResponse: {ret_message}')
+    print(f'\nFinish reason: {ret_fin_reason}')
+    
     return ret_message, ret_fin_reason
 
