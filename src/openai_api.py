@@ -46,8 +46,8 @@ def get_completion(prompt_user, prompt_system=None, model="gpt-4o-mini", tempera
         - 'openai_exception' will be raised when there is an OpenAI exception
 
         Whether your API call works at all, as total tokens must be below the model’s maximum limit:
-        - 4096 tokens for   gpt-3.5-turbo-instruct - US$ 1,50/1M input tokens, US$ 2,00/1M output tokens 
-        - 16k tokens for    gpt-3.5-turbo-0125 - US$ 0,50 / 1M input tokens
+        - 4096 tokens for   gpt-3.5-turbo-instruct - US$ 1,50/1M input tokens, US$ 2,00 / 1M output tokens 
+        - 16k tokens for    gpt-3.5-turbo-0125 - US$ 0,50 / 1M input tokens, US$ 1,50 / 1M output tokens
         - 128k tokens for   gpt-4 - US$ 5,00 / 1M input tokens , US$ 15,00 / 1M output tokens
         - 128k tokens for   gpt-4o-mini - Input: $0.15 | Output: $0.60* https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/
         
@@ -88,11 +88,12 @@ def get_completion(prompt_user, prompt_system=None, model="gpt-4o-mini", tempera
     tokens_user = tokenizer.encode(prompt_user)
     tokens_response = tokenizer.encode(ret_message)
     
-    print(f'\n\nPrompt System: {len(tokens_sys)} tokens.\n ===> {prompt_system}')
-    print(f'Prompt User:  {len(tokens_user)} tokens.\n ===> {prompt_user}')
-    print(f'Tokens Response: {len(tokens_response)} tokens.\n')
-    print(f'Total tokens = {len(tokens_sys)+len(tokens_user)}')
-    print(f'\n==============\nResponse: {ret_message}')
+    print(f'\n\nUsing model {model}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print(f'Prompt System: {len(tokens_sys)} tokens. ===> {prompt_system}')
+    print(f'Prompt User:  {len(tokens_user)} tokens. ===> {prompt_user}')
+    print(f'Total tokens Sys+User: {len(tokens_sys)+len(tokens_user)}')
+    print(f'Tokens Response: {len(tokens_response)} tokens.')
+    print(f'Response: {ret_message}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     print(f'\nFinish reason: {ret_fin_reason}')
     
     return ret_message, ret_fin_reason

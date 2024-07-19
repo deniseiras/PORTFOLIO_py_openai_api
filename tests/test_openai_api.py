@@ -15,6 +15,12 @@ class TestGetCompletion(unittest.TestCase):
         self.assertIn("Paris", response)
         self.assertEqual(finish_reason, "stop")
 
+    def test_get_completion_with_gpt3turbo_0125(self):
+        prompt = "Generate a plan to solve the following problem: How to create a new business idea in 30 words?"
+        response, finish_reason = get_completion(prompt, model="gpt-3.5-turbo-0125")
+        self.assertNotEqual(response, "")
+        self.assertEqual(finish_reason, "stop")
+        
     def test_get_completion_with_gpt4(self):
         prompt = "Generate a plan to solve the following problem: How to create a new business idea in 30 words?"
         response, finish_reason = get_completion(prompt, model="gpt-4")
