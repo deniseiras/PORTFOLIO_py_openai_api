@@ -26,7 +26,7 @@ def set_openai_key():
         openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-def get_completion(prompt_user, prompt_system=None, model="gpt-3.5-turbo", temperature=0):
+def get_completion(prompt_user, prompt_system=None, model="gpt-4o-mini", temperature=0):
     """
         get completion using OpenAI
 
@@ -46,9 +46,14 @@ def get_completion(prompt_user, prompt_system=None, model="gpt-3.5-turbo", tempe
         - 'openai_exception' will be raised when there is an OpenAI exception
 
         Whether your API call works at all, as total tokens must be below the model’s maximum limit:
-        - 4096 tokens for   gpt-3.5-turbo-instruct
-        - 16k tokens for    gpt-3.5-turbo (points to gpt-3.5-turbo-0125. in 27/06/2024)
-        - 128k tokens for   gpt-4
+        - 4096 tokens for   gpt-3.5-turbo-instruct - US$ 1,50/1M input tokens, US$ 2,00/1M output tokens 
+        - 16k tokens for    gpt-3.5-turbo-0125 - US$ 0,50 / 1M input tokens
+        - 128k tokens for   gpt-4 - US$ 5,00 / 1M input tokens , US$ 15,00 / 1M output tokens
+        - 128k tokens for   gpt-4o-mini - Input: $0.15 | Output: $0.60* https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/
+        
+        * gpt-3.5-turbo actually points to gpt-3.5-turbo-instruct . For some reason in this API gpt-3.5-turbo doesn't uses the latest version (gpt-3.5-turbo-0125)
+        
+        
     """
         
     set_openai_key()

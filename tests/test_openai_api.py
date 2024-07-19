@@ -21,7 +21,13 @@ class TestGetCompletion(unittest.TestCase):
         self.assertNotEqual(response, "")
         self.assertEqual(finish_reason, "stop")
 
-    def test_get_completion_with_temperature(self):
+    def test_get_completion_with_gpt4omini(self):
+        prompt = "Generate a plan to solve the following problem: How to create a new business idea in 30 words?"
+        response, finish_reason = get_completion(prompt, model="gpt-4o-mini")
+        self.assertNotEqual(response, "")
+        self.assertEqual(finish_reason, "stop")
+        
+    def test_get_completion_with_temperature_with_default_model(self):
         prompt = "Write a short story about a sunny day in 20 words."
         response1, _ = get_completion(prompt, temperature=0)
         response2, _ = get_completion(prompt, temperature=1)
