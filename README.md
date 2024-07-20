@@ -1,6 +1,6 @@
 # PORTFOLIO_py_openai_api
 
-An OpenAI API interface to execute openai (ChatGTP) models.
+An OpenAI interface to execute OpenAI API (ChatGTP  models).
 
 Implements the methods:
 
