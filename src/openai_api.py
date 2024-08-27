@@ -26,7 +26,7 @@ def set_openai_key():
         openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-def get_completion(prompt_user, prompt_system=None, model="gpt-4o-mini", temperature=0):
+def get_completion(prompt_user, prompt_system=None, model="gpt-4o-mini", temperature=0, max_tokens=10000):
     """
         get completion using OpenAI
 
@@ -69,6 +69,7 @@ def get_completion(prompt_user, prompt_system=None, model="gpt-4o-mini", tempera
             # response_format={"type": "json_object"},
             messages=mssgs,
             temperature=temperature,
+            max_tokens=max_tokens
         )
         
         choice = response.choices[0]
