@@ -20,7 +20,7 @@ def set_openai_key():
     """
     if openai.api_key is None:
         print('setting openai key')
-        del os.environ['OPENAI_API_KEY']
+        # del os.environ['OPENAI_API_KEY']
         # load the OPENAI_API_KEY in .env file
         dotenv.load_dotenv()
         openai.api_key = os.getenv('OPENAI_API_KEY')
